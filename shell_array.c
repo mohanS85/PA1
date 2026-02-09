@@ -43,7 +43,9 @@ long *Array_Load_From_File(char *filename, int *size) {
 }
 
 int Array_Save_To_File(char *filename, long *array, int size) {
-    if (filename == NULL) return -1; // array can be NULL if size is 0, handled by fwrite
+    if (filename == NULL) {
+        return -1; // array can be NULL if size is 0
+    }
     
     FILE *fp = fopen(filename, "wb");
     if (fp == NULL) {
@@ -57,7 +59,9 @@ int Array_Save_To_File(char *filename, long *array, int size) {
 
 void Array_Shellsort(long *array, int size, long *n_comp) {
     *n_comp = 0;
-    if (array == NULL || size <= 1) return;
+    if (array == NULL || size <= 1) {
+        return;
+    }
 
     int seq_size = 0;
     long *seq = Generate_2p3q_Seq(size, &seq_size);

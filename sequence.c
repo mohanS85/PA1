@@ -3,6 +3,7 @@
 #include "sequence.h"
 
 static void insertion_sort(long *array, int size) {
+    // Insertion sort algorithm
     int i, j;
     long temp;
     for (i = 1; i < size; i++) {
@@ -17,24 +18,29 @@ static void insertion_sort(long *array, int size) {
 }
 
 long *Generate_2p3q_Seq(int n, int *seq_size) {
+    // Even if empty, allocate 0 bytes
     if (n <= 1) {
         *seq_size = 0;
-        // Even if empty, allocate 0 bytes as per spec (allocating 0 usually returns a non-null pointer or NULL depending on implementation, 
-        // but the spec says "allocate a space of 0 elements").
         return (long *)malloc(0); 
     }
 
-    // 1. Count the number of valid elements
+    // Count number of valid elements
     int count = 0;
     long p2 = 1; 
     while (p2 < n) {
         long p3 = 1;
         while (p2 * p3 < n) {
             count++;
-            if (n / 3 < p2 * p3) break; // Check for overflow before multiplying
+            // Check for overflow before multiplying
+            if (n / 3 < p2 * p3) {
+                break;
+            }
             p3 *= 3;
         }
-        if (n / 2 < p2) break; // Check for overflow
+        // Check for overflow before multiplying
+        if (n / 2 < p2) {
+            break;
+        }
         p2 *= 2;
     }
 
@@ -45,21 +51,25 @@ long *Generate_2p3q_Seq(int n, int *seq_size) {
         return NULL;
     }
 
-    // 2. Populate the array
+    // Populate array
     int idx = 0;
     p2 = 1;
     while (p2 < n) {
         long p3 = 1;
         while (p2 * p3 < n) {
             seq[idx++] = p2 * p3;
-            if (n / 3 < p2 * p3) break;
+            if (n / 3 < p2 * p3) {
+                break;
+            }
             p3 *= 3;
         }
-        if (n / 2 < p2) break;
+        if (n / 2 < p2) {
+            break;
+        }
         p2 *= 2;
     }
 
-    // 3. Sort the sequence
+    // Sort sequence with insertion sort
     insertion_sort(seq, count);
 
     return seq;

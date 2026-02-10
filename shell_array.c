@@ -66,17 +66,15 @@ void Array_Shellsort(long *array, int size, long *n_comp) {
     int seq_size = 0;
     long *seq = Generate_2p3q_Seq(size, &seq_size);
 
-    // If sequence generation fails, fall back to standard insertion sort (gap = 1)
-    // We can simulate this by having a sequence of just {1} or handling it manually.
-    // However, the spec says "use a regular insertion sort... if Generate fails".
+    // If sequence generation fails, use standard insertion sort
     
     if (seq == NULL && seq_size == 0 && size > 1) {
-        // Fallback: Standard Insertion Sort
         for (int i = 1; i < size; i++) {
             long temp = array[i];
             int j = i;
             while (j >= 1) {
-                *n_comp += 1; // comparison: array[j-1] > temp
+                // comparison to do: array[j-1] > temp
+                *n_comp += 1;
                 if (array[j - 1] > temp) {
                     array[j] = array[j - 1];
                     j -= 1;
@@ -98,7 +96,8 @@ void Array_Shellsort(long *array, int size, long *n_comp) {
             long temp = array[j];
             int i = j;
             while (i >= k) {
-                *n_comp += 1; // Comparison involving temp and array[i-k]
+                // Comparison involving temp and array[i-k]
+                *n_comp += 1;
                 if (array[i - k] > temp) {
                     array[i] = array[i - k];
                     i = i - k;
